@@ -1,5 +1,6 @@
 # website_based_shared_music_player
-![image](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/1637059e-247d-4b42-bfc8-0d7f62749b3a)
+![mobile](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/0597961d-8a20-443e-a4ea-6d1f50df9c34)
+
 
 Dibuat menggunakan [Codeintiger 4](https://github.com/codeigniter4/CodeIgniter4)
 
