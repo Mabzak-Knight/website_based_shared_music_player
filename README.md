@@ -9,7 +9,8 @@ Bayangkan di lab komputer, masing-masing komputer memutar musik yang berbeda-bed
 
 Contoh gambaran cara kerja:
 
-![image](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/eec55dea-6619-476e-86a7-afdbf086f78d)
+![image](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/6a7df21b-c5cb-4c0e-8bcc-c8a6b77bc6c0)
+
 
 ##FITUR
 1. Input File Musik
