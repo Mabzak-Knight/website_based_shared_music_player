@@ -180,10 +180,32 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
-</script>
 
-    <script>
+    // Tambahkan event listener untuk tombol "Kirim ke Streaming"
+    $('.send-to-streaming').click(function() {
+        var musicId = $(this).data('musicid');
+
+        $.ajax({
+            url: '<?= site_url('music/send-to-streaming/') ?>' + musicId,
+            type: 'GET',
+            success: function(response) {
+                if (response.success) {
+                    // Tampilkan modal jika pengiriman berhasil
+                    $('#streamingModal').modal('show');
+                     // Jika ingin menutup modal setelah beberapa detik
+                     setTimeout(function() {
+                        $('#streamingModal').modal('hide');
+                    }, 4000); // Tutup modal setelah 5 detik
+                } else {
+                    // Handle jika terjadi kesalahan
+                    alert(response.message);
+                }
+            }
+        });
+    });
+});
+</script> 
+<script>
         $(document).ready(function() {
             var table = $('#musicTable').DataTable();
 
@@ -192,38 +214,5 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     </script>
-    <script>
-    $(document).ready(function() {
-        var table = $('#musicTable').DataTable();
-
-        $('#searchInput').on('keyup', function() {
-            table.search(this.value).draw();
-        });
-
-        // Tambahkan event listener untuk tombol "Kirim ke Streaming"
-        $('.send-to-streaming').click(function() {
-            var musicId = $(this).data('musicid');
-
-            $.ajax({
-                url: '<?= site_url('music/send-to-streaming/') ?>' + musicId,
-                type: 'GET',
-                success: function(response) {
-                    if (response.success) {
-                        // Tampilkan modal jika pengiriman berhasil
-                        $('#streamingModal').modal('show');
-                         // Jika ingin menutup modal setelah beberapa detik
-                         setTimeout(function() {
-                            $('#streamingModal').modal('hide');
-                        }, 3000); // Tutup modal setelah 5 detik
-                    } else {
-                        // Handle jika terjadi kesalahan
-                        alert(response.message);
-                    }
-                }
-            });
-        });
-    });
-</script>
-
 </body>
 </html>
