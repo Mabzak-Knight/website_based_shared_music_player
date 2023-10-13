@@ -1,11 +1,12 @@
-# website_based_shared_music_player
-![mobile](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/0597961d-8a20-443e-a4ea-6d1f50df9c34)
+# sMP -Share Music Player
+![Untitled-1](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/a2b41c37-8ad5-4a9c-b5e2-84acfdec8dde)
+
 
 
 Dibuat menggunakan [Codeintiger 4](https://github.com/codeigniter4/CodeIgniter4) Berbasis website ya
 
 ## Kenapa aplikasi ini dibuat?
-Bayangkan di lab komputer, masing-masing komputer memutar musik yang berbeda-beda, ribut gak tuh?, jadi aplikasi ini sebagai solusi dimana pc yang diizinkan untuk memutar lagu hanya satu saja, tetapi semua orang dapat mengganti musik sesuai yang di inginkannya
+Bayangkan di lab komputer, masing-masing komputer memutar musik yang berbeda-beda, ribut gak tuh?, jadi aplikasi ini sebagai solusi dimana pc yang diizinkan untuk memutar lagu hanya satu saja, tetapi semua orang dapat mengganti musik sesuai yang di inginkannya. bisa digunakan pada andorid atau perangkat website yang mendukung javascript. bisa di manfaatkan sebagai host pemutar musik streaming cafe, radio atau youtube dan pendengar bisa merequest musiknya secara langsung dengan smartphone
 
 Contoh gambaran cara kerja:
 
