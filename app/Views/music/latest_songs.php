@@ -100,10 +100,13 @@
                 if (index === currentSongIndex && isPlaying) {
                     // Jika lagu sedang diputar, tambahkan ikon musik
                     title.prepend('<i class="fas fa-music mr-2"></i>');
+                    var playButton = $('<button class="btn text-warning btn-sm"><i class="fas fa-play"></i></button>');
+                }else{
+                    var playButton = $('<button class="btn text-success btn-sm"><i class="fas fa-play"></i></button>');
                 }
 
                 var deleteButton = $('<button class="btn text-danger btn-sm"><i class="fas fa-times"></i></button>');
-                var playButton = $('<button class="btn text-success btn-sm"><i class="fas fa-play"></i></button>');
+               
 
                 deleteButton.click(function() {
                     deleteSong(index);
