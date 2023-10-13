@@ -6,6 +6,7 @@
     <title>Steaming | SMP - Shared Music Player </title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     
+    
     <style>
         audio {
             width: 100%;
@@ -36,7 +37,16 @@
             </div>
         </div>
     </div>
+    
+<div class="card">
+    <div class="card-body">       
+    <div class="custom-control custom-switch">
+        <input checked type="checkbox" class="custom-control-input" id="autoPlaySwitch">
+        <label class="custom-control-label" for="autoPlaySwitch">Putar otomatis musik baru</label>
+    </div>
 
+    </div>
+</div>
     <div class="card mt-4">
     <div class="card-body">
         <div class="container">
@@ -58,37 +68,63 @@
     var playlist = [];
     var currentSongIndex = 0;
     var isPlaying = false;
+    var cPlaying = true;
+    var autoPlaySwitch = document.getElementById('autoPlaySwitch');
+
 
     function loadLatestSongs() {
-        $.ajax({
-            url: '<?= site_url('music/latest-songs-json') ?>',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                const latestSongs = response.latestSongs;
-                const listElement = $('#latestSongsList');
-                listElement.empty();
+    $.ajax({
+        url: '<?= site_url('music/latest-songs-json') ?>',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            const latestSongs = response.latestSongs;
+            const listElement = $('#latestSongsList');
+            listElement.empty();
 
-                playlist.forEach(function (song, index) {
-                    var listItem = $('<li class="list-group-item"></li>').text(song.judul);
-                    if (index === currentSongIndex && isPlaying) {
-                        // Tandai lagu yang sedang diputar dengan ikon putar musik
-                        listItem.prepend('<i class="fas fa-music mr-2"></i>');
+            autoPlaySwitch.addEventListener('change', function() {
+                cPlaying = this.checked;
+            });
+
+            playlist.forEach(function (song, index) {
+                var listItem = $('<li class="list-group-item"></li>').text(song.judul);
+                if (index === currentSongIndex && isPlaying) {
+                    // Tandai lagu yang sedang diputar dengan ikon putar musik
+                    listItem.prepend('<i class="fas fa-music mr-2"></i>');
+                }
+                listElement.append(listItem);
+            });
+
+            //jika ada musik baru di masukkan
+            if (JSON.stringify(latestSongs) !== JSON.stringify(playlist)) {
+                // Jika daftar putar berubah, perbarui daftar putar dan putar musik baru
+                playlist = latestSongs;
+                if (cPlaying) {
+                    var currentSong = playlist[currentSongIndex];
+                    if (currentSong && currentSong.id === parseInt(audioPlayer.dataset.currentMusicId)) {
+                        // Putar ulang musik jika musik baru adalah yang sedang diputar           
+                        audioPlayer.currentTime = 0;
+                        audioPlayer.play();
+                    } else {
+                        currentSongIndex=0;
+                        playSong(currentSongIndex);
                     }
-                    listElement.append(listItem);
-                });
-
-                if (JSON.stringify(latestSongs) !== JSON.stringify(playlist)) {
-                    // Jika daftar putar berubah, perbarui daftar putar dan putar musik baru
-                    playlist = latestSongs;
-                    currentSongIndex=0;
-
-                    // Memastikan lagu pertama dimainkan saat halaman dibuka atau daftar putar diperbarui
-                    playSong(currentSongIndex);
+                } else {
+                    if (currentSongIndex < playlist.length) {
+                        if (currentSong && currentSong.id === parseInt(audioPlayer.dataset.currentMusicId)) {
+                            currentSongIndex = 0;
+                        }else{
+                            currentSongIndex++;
+                        }
+                    } else {
+                        currentSongIndex = 0;
+                    }
                 }
             }
-        });
-    }
+        }
+    });
+}
+
 
     function playSong(index) {
         var song = playlist[index];
@@ -100,6 +136,7 @@
         loadLatestSongs();
     }
 
+    //musik selanjutnya jika sudah selesai
     audioPlayer.onended = function () {
         currentSongIndex++;
         if (currentSongIndex < playlist.length) {
