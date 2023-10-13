@@ -6,7 +6,7 @@
 Dibuat menggunakan [Codeintiger 4](https://github.com/codeigniter4/CodeIgniter4) Berbasis website ya
 
 ## Kenapa aplikasi ini dibuat?
-Bayangkan di lab komputer, masing-masing komputer memutar musik yang berbeda-beda, ribut gak tuh?, jadi aplikasi ini sebagai solusi dimana pc yang diizinkan untuk memutar lagu hanya satu saja, tetapi semua orang dapat mengganti musik sesuai yang di inginkannya. bisa digunakan pada andorid atau perangkat website yang mendukung javascript. bisa di manfaatkan sebagai host pemutar musik straming radio atau youtube dan pendengar bisa merequest musiknya secara langsung dengan smartphone
+Bayangkan di lab komputer, masing-masing komputer memutar musik yang berbeda-beda, ribut gak tuh?, jadi aplikasi ini sebagai solusi dimana pc yang diizinkan untuk memutar lagu hanya satu saja, tetapi semua orang dapat mengganti musik sesuai yang di inginkannya. bisa digunakan pada andorid atau perangkat website yang mendukung javascript. bisa di manfaatkan sebagai host pemutar musik streaming cafe, radio atau youtube dan pendengar bisa merequest musiknya secara langsung dengan smartphone
 
 Contoh gambaran cara kerja:
 
