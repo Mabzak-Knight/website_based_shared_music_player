@@ -32,26 +32,31 @@ public function input()
     {
         return view('music/input');
     }
-
+    
 public function save()
 {
     $model = new MusicModel();
+    $file = $this->request->getFile('file_musik');
+
+    // Generate nama file baru berdasarkan timestamp
+    $newFileName = time() . '_' . $file->getRandomName();
+
     $data = [
         'judul' => $this->request->getPost('judul'),
         'artis' => $this->request->getPost('artis'),
         'album' => $this->request->getPost('album'),
-        'file_musik' => $this->request->getFile('file_musik')->getName(), // Ambil nama file
+        'file_musik' => $newFileName, // Gunakan nama file baru
     ];
     
     // Simpan data ke database
     $model->insert($data);
 
     // Pindahkan file ke direktori yang diinginkan
-    $file = $this->request->getFile('file_musik');
-    $file->move(ROOTPATH . 'public/uploads'); // Pindahkan ke folder uploads
+    $file->move(ROOTPATH . 'public/uploads', $newFileName);
 
     return redirect()->to(site_url('music'));
 }
+
 
 public function play($id)
 {
