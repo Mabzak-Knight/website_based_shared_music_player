@@ -88,31 +88,45 @@
             });
 
             playlist.forEach(function (song, index) {
-    var listItem = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
+                var listItem = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
 
-    var songInfo = $('<div></div>'); // Membuat div untuk menyimpan informasi lagu
-    var title = $('<span class="font-weight-bold"></span>').text(song.judul); // Judul lagu
-    var artist = $('<span class="ml-2"></span>').text(song.artis); // Artis lagu
+                var songInfo = $('<div></div>'); // Membuat div untuk menyimpan informasi lagu
+                var title = $('<span class="font-weight-bold"></span>').text(song.judul); // Judul lagu
+                var artist = $('<span class="ml-2"></span>').text(song.artis); // Artis lagu
 
-    songInfo.append(title);
-    songInfo.append(artist);
+                songInfo.append(title);
+                songInfo.append(artist);
 
-    if (index === currentSongIndex && isPlaying) {
-        // Jika lagu sedang diputar, tambahkan ikon musik
-        title.prepend('<i class="fas fa-music mr-2"></i>');
-    }
+                if (index === currentSongIndex && isPlaying) {
+                    // Jika lagu sedang diputar, tambahkan ikon musik
+                    title.prepend('<i class="fas fa-music mr-2"></i>');
+                }
 
-    var deleteButton = $('<button class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>');
+                var deleteButton = $('<button class="btn text-danger btn-sm"><i class="fas fa-times"></i></button>');
+                var playButton = $('<button class="btn text-success btn-sm"><i class="fas fa-play"></i></button>');
 
-    deleteButton.click(function() {
-        deleteSong(index);
-    });
+                deleteButton.click(function() {
+                    deleteSong(index);
+                });
 
-    listItem.append(songInfo);
-    listItem.append(deleteButton);
+                playButton.click(function() {
+                    currentSongIndex=index;
+                    playSong(index);
+                });
+                
 
-    listElement.append(listItem);
-});
+                listItem.append(songInfo);
+
+                // Buat div baru untuk mengelompokkan tombol delete dan play
+                var buttonsContainer = $('<div class="d-flex align-items-center"></div>');
+                buttonsContainer.append(deleteButton);
+                buttonsContainer.append(playButton);
+                
+                listItem.append(buttonsContainer);
+
+                listElement.append(listItem);
+            });
+
 
 
             //jika ada musik baru di masukkan
@@ -207,7 +221,7 @@ function deleteSong(index) {
     updatePlaylist();
 
     // Memperbarui playlist setiap 10 detik
-    setInterval(updatePlaylist, 5000);
+    setInterval(updatePlaylist, 4000);
 </script>
 
 
