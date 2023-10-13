@@ -207,7 +207,7 @@ function deleteSong(index) {
     updatePlaylist();
 
     // Memperbarui playlist setiap 10 detik
-    setInterval(updatePlaylist, 10000);
+    setInterval(updatePlaylist, 5000);
 </script>
 
 
