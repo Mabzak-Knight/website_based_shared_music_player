@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\MusicModel;
 use App\Models\NowPlayingModel;
+use getID3;
 
 class MusicController extends BaseController
 {
@@ -52,29 +53,52 @@ public function input()
         return $this->response->setJSON($response);
     }
 
-public function save()
-{
-    $model = new MusicModel();
-    $file = $this->request->getFile('file_musik');
-
-    // Generate nama file baru berdasarkan timestamp
-    $newFileName = time() . '_' . $file->getRandomName();
-
-    $data = [
-        'judul' => $this->request->getPost('judul'),
-        'artis' => $this->request->getPost('artis'),
-        'album' => $this->request->getPost('album'),
-        'file_musik' => $newFileName, // Gunakan nama file baru
-    ];
+    public function save()
+    {
+        require_once 'path_to_getID3/getid3/getid3.php';
     
-    // Simpan data ke database
-    $model->insert($data);
-
-    // Pindahkan file ke direktori yang diinginkan
-    $file->move(ROOTPATH . 'public/uploads', $newFileName);
-
-    return redirect()->to(site_url('music'));
-}
+        $model = new MusicModel();
+        $file = $this->request->getFile('file_musik');
+    
+        // Generate nama file baru berdasarkan timestamp
+        $newFileName = time() . '_' . $file->getRandomName();
+    
+        // Pemeriksaan durasi file musik
+        $getID3 = new getID3;
+        $fileInfo = $getID3->analyze($file->getTempName());
+        $duration = $fileInfo['playtime_seconds'];
+        
+        if ($duration <= 600) { // Durasi kurang dari atau sama dengan 10 menit (600 detik)
+            // Pemeriksaan tipe file
+            $audioFileType = $fileInfo['fileformat'];
+            if (in_array($audioFileType, ['mp3', 'wav', 'ogg', 'flac'])) {
+                // File adalah file musik yang didukung
+    
+                // Lanjutkan dengan menyimpan data ke database dan memindahkan file
+                $data = [
+                    'judul' => $this->request->getPost('judul'),
+                    'artis' => $this->request->getPost('artis'),
+                    'album' => $this->request->getPost('album'),
+                    'file_musik' => $newFileName, // Gunakan nama file baru
+                ];
+                
+                // Simpan data ke database
+                $model->insert($data);
+    
+                // Pindahkan file ke direktori yang diinginkan
+                $file->move(ROOTPATH . 'public/uploads', $newFileName);
+    
+                return redirect()->to(site_url('music'));
+            } else {
+                // File tidak didukung, tindakan yang sesuai
+                echo "Tipe file tidak didukung. Mohon unggah file musik yang valid.";
+            }
+        } else {
+            // File tidak memenuhi syarat, lakukan tindakan yang sesuai
+            echo "File musik harus kurang dari atau sama dengan 10 menit.";
+        }
+    }
+    
 
 
 public function play($id)
