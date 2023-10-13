@@ -23,7 +23,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/music/input">
                     <button type="button" class="btn btn-dark btn-lg">
-                        <i class="fas fa-plus"></i> Tambah Musik
+                        <i class="fas fa-plus"></i> Upload Musik
                     </button>
                 </a>
             </li>
