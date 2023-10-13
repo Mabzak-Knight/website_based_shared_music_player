@@ -16,7 +16,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/music/streaming">
                     <button type="button" class="btn btn-dark btn-lg">
-                        <i class="fas fa-play"></i> Streaming
+                        <i class="fas fa-play"></i> Music Player
                     </button>
                 </a>
             </li>
