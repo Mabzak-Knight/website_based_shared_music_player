@@ -26,13 +26,32 @@ public function index()
 }
 
 
-
-
 public function input()
     {
         return view('music/input');
     }
-    
+
+    public function deleteSong()
+    {
+        $nowPlayingModel = new NowPlayingModel();
+
+        // Ambil ID lagu dari permintaan POST
+        $songId = $this->request->getPost('songId');
+
+        // Hapus lagu dari tabel putar_sekarang
+        $deleted = $nowPlayingModel->delete($songId);
+
+        if ($deleted) {
+            // Jika penghapusan berhasil
+            $response = ['success' => true];
+        } else {
+            // Jika terjadi kesalahan saat menghapus
+            $response = ['success' => false];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
 public function save()
 {
     $model = new MusicModel();
@@ -120,7 +139,7 @@ public function latestSongs()
 public function latestSongsJson()
 {
     $nowPlayingModel = new NowPlayingModel();
-    $latestSongs = $nowPlayingModel->select('musik.judul, musik.file_musik')
+    $latestSongs = $nowPlayingModel->select('musik.judul,musik.artis, musik.file_musik,putar_sekarang.id')
                                    ->join('musik', 'musik.id = putar_sekarang.id_lagu')
                                    ->orderBy('putar_sekarang.waktu_putar', 'desc')
                                    ->limit(3)

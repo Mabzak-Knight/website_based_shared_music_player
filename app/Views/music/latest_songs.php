@@ -54,6 +54,7 @@
             <ul class="list-group list-group-flush shadow p-3 mb-5 bg-white rounded" id="latestSongsList">
                 <!-- Data terbaru akan dimuat di sini secara dinamis -->
             </ul>
+
         </div>
     </div>
 </div>
@@ -87,13 +88,32 @@
             });
 
             playlist.forEach(function (song, index) {
-                var listItem = $('<li class="list-group-item"></li>').text(song.judul);
-                if (index === currentSongIndex && isPlaying) {
-                    // Tandai lagu yang sedang diputar dengan ikon putar musik
-                    listItem.prepend('<i class="fas fa-music mr-2"></i>');
-                }
-                listElement.append(listItem);
-            });
+    var listItem = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
+
+    var songInfo = $('<div></div>'); // Membuat div untuk menyimpan informasi lagu
+    var title = $('<span class="font-weight-bold"></span>').text(song.judul); // Judul lagu
+    var artist = $('<span class="ml-2"></span>').text(song.artis); // Artis lagu
+
+    songInfo.append(title);
+    songInfo.append(artist);
+
+    if (index === currentSongIndex && isPlaying) {
+        // Jika lagu sedang diputar, tambahkan ikon musik
+        title.prepend('<i class="fas fa-music mr-2"></i>');
+    }
+
+    var deleteButton = $('<button class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>');
+
+    deleteButton.click(function() {
+        deleteSong(index);
+    });
+
+    listItem.append(songInfo);
+    listItem.append(deleteButton);
+
+    listElement.append(listItem);
+});
+
 
             //jika ada musik baru di masukkan
             if (JSON.stringify(latestSongs) !== JSON.stringify(playlist)) {
@@ -124,6 +144,37 @@
         }
     });
 }
+function deleteSong(index) {
+    var songId = playlist[index].id; // Ambil ID lagu dari playlist
+
+    console.log('Menghapus lagu dengan ID: ' + songId); // Menampilkan pesan input
+
+    $.ajax({
+        url: '<?= site_url('music/delete-song') ?>', // Ganti dengan URL yang sesuai
+        type: 'POST',
+        dataType: 'json',
+        data: { songId: songId },
+        success: function(response) {
+            if (response.success) {
+                console.log('Lagu berhasil dihapus'); // Menampilkan pesan output sukses
+                playlist.splice(index, 1);
+                if (index === currentSongIndex && isPlaying) {
+                    audioPlayer.pause();
+                    isPlaying = false;
+                }
+                loadLatestSongs();
+            } else {
+                console.error('Gagal menghapus lagu'); // Menampilkan pesan output gagal
+                alert('Gagal menghapus lagu');
+            }
+        },
+        error: function() {
+            console.error('Terjadi kesalahan saat menghubungi server'); // Menampilkan pesan error
+            alert('Terjadi kesalahan saat menghubungi server');
+        }
+    });
+}
+
 
 
     function playSong(index) {
