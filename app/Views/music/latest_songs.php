@@ -81,6 +81,7 @@
                 if (JSON.stringify(latestSongs) !== JSON.stringify(playlist)) {
                     // Jika daftar putar berubah, perbarui daftar putar dan putar musik baru
                     playlist = latestSongs;
+                    currentSongIndex=0;
 
                     // Memastikan lagu pertama dimainkan saat halaman dibuka atau daftar putar diperbarui
                     playSong(currentSongIndex);
