@@ -13,7 +13,17 @@ Contoh gambaran cara kerja:
 ![image](https://github.com/Mabzak-Knight/website_based_shared_music_player/assets/56875726/6a7df21b-c5cb-4c0e-8bcc-c8a6b77bc6c0)
 
 
-##FITUR
+## FITUR
 1. Input File Musik
 2. Pencarian Musik
 3. Pemutar Musik Bersama (menu: straming) 
+
+## Cara Instal di Localhost atau komputer pribadi
+- Nyalakan XAMPP
+- Pindahkan Folder ke dalam htdoc
+- Gunakan Terminal atau CMD di folder
+  ```
+  php spark serve
+  ```
+- Jalankan di localhost:8080
+- Gunakan komputer yang terhubung pada jaringan lan, masukan IP komputer contoh ```192.168.0.2:8080```
